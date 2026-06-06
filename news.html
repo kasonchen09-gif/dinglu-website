@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻详情 - 鼎麓科技</title>
+    <meta name="description" content="鼎麓科技新闻动态">
+    <meta name="keywords" content="建筑资质,工商财税,专利申请,商标注册,鼎麓科技">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a3a5c'/><text y='.9em' font-size='75' text-anchor='middle' fill='%23c49b4f' x='50'>鼎</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main CSS (header/footer styles) -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ===== Article Page Specific Styles ===== */
+        :root {
+            --primary: #1a3a5c;
+            --gold: #c49b4f;
+            --text: #333;
+            --muted: #666;
+            --light-muted: #999;
+            --bg-light: #f8f9fa;
+            --border: #e0e0e0;
+        }
+
+        /* ---- Article Hero ---- */
+        .article-hero {
+            position: relative;
+            min-height: 420px;
+            display: flex;
+            align-items: flex-end;
+            padding: 160px 0 60px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 60%, #25507a 100%);
+            overflow: hidden;
+        }
+
+        .article-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(196, 155, 79, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+        }
+
+        .article-hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            filter: blur(2px);
+        }
+
+        .article-hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .article-hero .article-cat {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--gold);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .article-hero .article-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .article-hero .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .article-hero .article-meta i {
+            color: var(--gold);
+            margin-right: 6px;
+        }
+
+        /* ---- Article Body ---- */
+        .article-section {
+            padding: 60px 0;
+            background: #fff;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .article-content {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--text);
+        }
+
+        .article-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 40px 0 16px;
+            padding-left: 14px;
+            border-left: 4px solid var(--gold);
+            line-height: 1.4;
+        }
+
+        .article-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .article-content strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .article-content a {
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--gold);
+        }
+
+        .article-content a:hover {
+            border-bottom-style: solid;
+        }
+
+        .article-content blockquote {
+            margin: 24px 0;
+            padding: 20px 24px;
+            background: var(--bg-light);
+            border-left: 4px solid var(--gold);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        /* ---- Back & Share Bar ---- */
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all .3s;
+        }
+
+        .btn-back:hover {
+            background: #25507a;
+            transform: translateX(-4px);
+        }
+
+        .share-btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btns span {
+            font-size: 13px;
+            color: var(--muted);
+            margin-right: 4px;
+        }
+
+        .share-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .3s;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .share-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ---- Not Found State ---- */
+        .article-notfound {
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .article-notfound i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 24px;
+        }
+
+        .article-notfound h2 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .article-notfound p {
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .article-hero {
+                min-height: 300px;
+                padding: 140px 0 40px;
+            }
+
+            .article-hero .article-title {
+                font-size: 24px;
+            }
+
+            .article-hero .article-meta {
+                font-size: 12px;
+                gap: 12px;
+            }
+
+            .article-section {
+                padding: 36px 0;
+            }
+
+            .article-content {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+
+            .article-content h3 {
+                font-size: 18px;
+                margin: 28px 0 12px;
+            }
+
+            .article-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-back {
+                justify-content: center;
+            }
+
+            .share-btns {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== Navigation ==================== -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="nav-logo">
+                    <img src="images/鼎麓科技.png" alt="鼎麓科技" class="logo-img">
+                </a>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">首页</a></li>
+                    <li class="nav-item"><a href="index.html#business" class="nav-link">业务范围</a></li>
+                    <li class="nav-item"><a href="index.html#news" class="nav-link active">新闻动态</a></li>
+                    <li class="nav-item"><a href="index.html#about" class="nav-link">关于我们</a></li>
+                    <li class="nav-item"><a href="index.html#contact" class="nav-link">联系我们</a></li>
+                </ul>
+                <div class="nav-contact">
+                    <a href="tel:07566195175" class="nav-phone">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span>0756-6195175</span>
+                    </a>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ==================== Article Hero ==================== -->
+    <section class="article-hero" id="articleHero">
+        <div class="article-hero-bg" id="articleHeroBg"></div>
+        <div class="article-hero-content">
+            <span class="article-cat" id="articleCat">加载中...</span>
+            <h1 class="article-title" id="articleTitle">加载中...</h1>
+            <div class="article-meta" id="articleMeta"></div>
+        </div>
+    </section>
+
+    <!-- ==================== Article Body ==================== -->
+    <section class="article-section">
+        <div class="article-container">
+            <div class="article-content" id="articleContent">
+                <p style="text-align:center;color:#999;">加载中...</p>
+            </div>
+
+            <div class="article-actions">
+                <a href="index.html#news" class="btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> 返回新闻列表
+                </a>
+                <div class="share-btns">
+                    <span>分享到：</span>
+                    <a class="share-btn" id="shareWechat" title="微信" onclick="return false;"><i class="fa-brands fa-weixin"></i></a>
+                    <a class="share-btn" id="shareWeibo" title="微博" target="_blank"><i class="fa-brands fa-weibo"></i></a>
+                    <a class="share-btn" id="shareCopy" title="复制链接" onclick="return false;"><i class="fa-solid fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== Footer ==================== -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col footer-col-about">
+                        <div class="footer-logo">
+                            <img src="images/鼎麓科技.png" alt="鼎麓科技" class="footer-logo-img">
+                        </div>
+                        <p class="footer-about-text">
+                            鼎麓科技是一家专注于为企业提供全方位商务服务的综合性机构，深耕建筑企业服务领域十余年，已成功服务超过5000家企业客户。
+                        </p>
+                        <div class="footer-social">
+                            <a href="#" class="social-link" title="微信"><i class="fa-brands fa-weixin"></i></a>
+                            <a href="#" class="social-link" title="微博"><i class="fa-brands fa-weibo"></i></a>
+                            <a href="#" class="social-link" title="抖音"><i class="fa-brands fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-title">快速导航</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html">首页</a></li>
+                            <li><a href="index.html#business">业务范围</a></li>
+                            <li><a href="index.html#news">新闻动态</a></li>
+                            <li><a href="index.html#about">关于我们</a></li>
+                            <li><a href="index.html#contact">联系我们</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-title">联系方式</h4>
+                        <ul class="footer-contact">
+                            <li><i class="fa-solid fa-location-dot"></i><span>广东省珠海市香洲区凤凰北路2099号5楼</span></li>
+                            <li><i class="fa-solid fa-phone"></i>
+                                <div class="footer-phones">
+                                    <a href="tel:07566195175">0756-6195175</a>
+                                    <a href="tel:13267992922">13267992922</a>
+                                </div>
+                            </li>
+                            <li><i class="fa-solid fa-envelope"></i><a href="mailto:info@anguan.com">info@anguan.com</a></li>
+                            <li><i class="fa-solid fa-clock"></i><span>周一至周日 9:00 - 18:00</span></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4 class="footer-title">友情链接</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">住房和城乡建设部</a></li>
+                            <li><a href="#">国家知识产权局</a></li>
+                            <li><a href="#">广东省住建厅</a></li>
+                            <li><a href="#">珠海市住建局</a></li>
+                            <li><a href="#">中国建筑业协会</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p class="copyright">Copyright &copy; 2024 鼎麓科技 All Rights Reserved.</p>
+                    <p class="icp">
+                        <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">粤ICP备XXXXXXXX号-1</a>
+                        <span class="sep">|</span>
+                        <span>粤公网安备 XXXXXXXXXXXX号</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" title="回到顶部">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+    // ==================== Article Loader ====================
+    (function() {
+        var newsId = new URLSearchParams(window.location.search).get('id');
+
+        // Fallback static data (used when API unavailable)
+        var fallbackNews = [
+            {
+                id: 'zizhi-gaige-2026',
+                image: 'https://picsum.photos/seed/news1/600/400',
+                dateDay: '28',
+                dateMonth: '2026.05',
+                category: '行业资讯',
+                title: '2026年建筑资质改革新政解读，企业应该如何应对？',
+                content: '<p>随着建筑业"放管服"改革持续深化，2026年建筑资质管理迎来重大调整。住房和城乡建设部近期发布了一系列新政策，对建筑企业的资质申请、延续、升级等环节进行了全面优化。</p><h3>一、政策背景</h3><p>近年来，国家持续推进建筑业"放管服"改革，旨在降低市场准入门槛，激发市场主体活力。2026年的建筑资质改革是这一系列改革的重要延续和深化。</p><h3>二、主要变化</h3><p>1. <strong>资质类别压减</strong>：将原有的施工总承包资质类别由12类压减至8类，专业承包资质由36类压减至20类。</p><p>2. <strong>人员要求调整</strong>：降低了对注册建造师数量的硬性要求。</p><p>3. <strong>审批时限缩短</strong>：资质审批时限由原来的45个工作日缩短至20个工作日。</p><p>4. <strong>动态监管加强</strong>：建立了建筑企业信用评价体系。</p><h3>三、企业应对策略</h3><p>企业应从提前规划资质布局、加强人才培养、规范企业管理、关注信用建设等方面积极应对。</p>'
+            },
+            {
+                id: 'gaoxin-renzheng-30',
+                image: 'https://picsum.photos/seed/news2/600/400',
+                dateDay: '15',
+                dateMonth: '2026.05',
+                category: '企业新闻',
+                title: '鼎麓科技成功助力30家企业通过国家高新认证',
+                content: '<p>近日，2026年第一批国家高新技术企业认定结果正式公布。由<strong>鼎麓科技</strong>辅导申报的30家企业全部通过认定，通过率达到<strong>100%</strong>。</p><h3>项目概况</h3><p>本次申报工作历时6个月，涵盖了建筑、制造、信息技术、环保科技等多个行业领域。</p><h3>服务亮点</h3><p>1. <strong>知识产权布局规划</strong>：针对每家企业的技术特点量身定制方案。</p><p>2. <strong>研发费用归集辅导</strong>：协助企业规范研发费用核算。</p><p>3. <strong>科技成果转化材料</strong>：帮助企业梳理近三年的科技成果。</p><p>4. <strong>申报材料精细化</strong>：对每份申报材料进行多轮审核和优化。</p>'
+            },
+            {
+                id: 'guangdong-zhishi-chanquan',
+                image: 'https://picsum.photos/seed/news3/600/400',
+                dateDay: '05',
+                dateMonth: '2026.05',
+                category: '政策解读',
+                title: '广东省科技创新"十四五"规划要点：企业知识产权布局指南',
+                content: '<p>广东省科技厅近日发布了新一轮科技创新扶持政策，对企业的知识产权和科技项目申报提出了更高的要求。</p><h3>一、政策要点</h3><p>1. <strong>加大研发投入支持</strong>：对研发费用占销售收入比例超过5%的企业给予额外补贴。</p><p>2. <strong>知识产权奖励升级</strong>：发明专利授权奖励提高至每件2万元。</p><p>3. <strong>高新技术企业培育</strong>：建立高新技术企业培育库。</p><p>4. <strong>专精特新企业扶持</strong>：对获评企业给予最高100万元奖励。</p>'
+            }
+        ];
+
+        function renderArticle(article) {
+            document.title = article.title + ' - 鼎麓科技';
+
+            // Meta description
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                var plainText = article.content.replace(/<[^>]*>/g, '').substring(0, 150);
+                metaDesc.content = plainText + '...';
+            }
+
+            // Hero
+            document.getElementById('articleCat').textContent = article.category;
+            document.getElementById('articleTitle').textContent = article.title;
+            document.getElementById('articleMeta').innerHTML =
+                '<span><i class="fa-solid fa-calendar"></i> ' + article.dateMonth + '.' + article.dateDay + '</span>' +
+                '<span><i class="fa-solid fa-folder"></i> ' + article.category + '</span>';
+
+            if (article.image) {
+                document.getElementById('articleHeroBg').style.backgroundImage = 'url(' + article.image + ')';
+            }
+
+            // Content
+            document.getElementById('articleContent').innerHTML = article.content;
+
+            // Share buttons
+            var pageUrl = encodeURIComponent(window.location.href);
+            var pageTitle = encodeURIComponent(article.title);
+            document.getElementById('shareWeibo').href = 'https://service.weibo.com/share/share.php?url=' + pageUrl + '&title=' + pageTitle;
+        }
+
+        function renderNotFound() {
+            document.getElementById('articleCat').textContent = '404';
+            document.getElementById('articleTitle').textContent = '新闻未找到';
+            document.getElementById('articleMeta').textContent = '';
+            document.getElementById('articleContent').innerHTML =
+                '<div class="article-notfound">' +
+                '<i class="fa-solid fa-newspaper"></i>' +
+                '<h2>新闻不存在或已删除</h2>' +
+                '<p>请检查链接是否正确，或该新闻可能已被移除</p>' +
+                '<a href="index.html#news" class="btn-back"><i class="fa-solid fa-arrow-left"></i> 返回新闻列表</a>' +
+                '</div>';
+            document.querySelector('.article-actions').style.display = 'none';
+        }
+
+        // Try loading from API first, fall back to static
+        fetch('/api/public-data')
+            .then(function(res) {
+                if (!res.ok) throw new Error('API unavailable');
+                return res.json();
+            })
+            .then(function(data) {
+                var newsList = data.news || [];
+                var found = null;
+                for (var i = 0; i < newsList.length; i++) {
+                    if (newsList[i].id === newsId) {
+                        found = newsList[i];
+                        break;
+                    }
+                }
+                if (found) {
+                    renderArticle(found);
+                } else {
+                    renderNotFound();
+                }
+            })
+            .catch(function() {
+                // Use fallback static data
+                var found = null;
+                for (var i = 0; i < fallbackNews.length; i++) {
+                    if (fallbackNews[i].id === newsId) {
+                        found = fallbackNews[i];
+                        break;
+                    }
+                }
+                if (found) {
+                    renderArticle(found);
+                } else {
+                    renderNotFound();
+                }
+            });
+
+        // ==================== Share Copy Link ====================
+        document.getElementById('shareCopy').addEventListener('click', function() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href).then(function() {
+                    alert('链接已复制到剪贴板');
+                });
+            } else {
+                prompt('复制以下链接：', window.location.href);
+            }
+        });
+
+        // WeChat share — show hint
+        document.getElementById('shareWechat').addEventListener('click', function() {
+            alert('请使用微信扫一扫或分享功能分享此页面');
+        });
+
+        // ==================== Header Scroll ====================
+        var header = document.getElementById('header');
+        var backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            var scrollY = window.scrollY || window.pageYOffset;
+            if (scrollY > 80) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            if (backToTop) {
+                if (scrollY > 500) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            }
+        }, { passive: true });
+
+        if (backToTop) {
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Mobile menu
+        var hamburger = document.getElementById('hamburger');
+        var navMenu = document.getElementById('navMenu');
+
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Initial scroll state
+        if (window.scrollY > 80) header.classList.add('scrolled');
+    })();
+    </script>
+</body>
+</html>
