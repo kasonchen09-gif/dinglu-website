@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         easing: 'ease-out-cubic',
         once: true,
         offset: 80,
-        disable: 'mobile',
+        disable: false,
     });
 
     // ==================== Load Dynamic Content ====================
