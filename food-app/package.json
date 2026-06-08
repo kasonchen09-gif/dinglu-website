@@ -1,0 +1,13 @@
+{
+  "name": "food-scanner",
+  "version": "1.0.0",
+  "description": "食物热量扫描仪 - 拍照即得卡路里数据",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "sharp": "^0.34.5"
+  }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f1923">
+    <title>食物热量扫描仪</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-512.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Gradient -->
+    <div class="bg-glow"></div>
+
+    <!-- ===== App Shell ===== -->
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-icon">🍔</div>
+            <h1>食物热量扫描仪</h1>
+            <p class="header-sub">拍照即知 · 卡路里一目了然</p>
+        </header>
+
+        <!-- Daily Summary Card -->
+        <div class="summary-card" id="summaryCard">
+            <div class="summary-calories">
+                <span class="cal-number" id="totalCal">0</span>
+                <span class="cal-unit">千卡</span>
+            </div>
+            <div class="summary-macros">
+                <div class="macro-item">
+                    <span class="macro-icon">🥩</span>
+                    <span class="macro-value" id="totalProtein">0</span>
+                    <span class="macro-label">蛋白质/g</span>
+                </div>
+                <div class="macro-divider"></div>
+                <div class="macro-item">
+                    <span class="macro-icon">🥑</span>
+                    <span class="macro-value" id="totalFat">0</span>
+                    <span class="macro-label">脂肪/g</span>
+                </div>
+                <div class="macro-divider"></div>
+                <div class="macro-item">
+                    <span class="macro-icon">🍚</span>
+                    <span class="macro-value" id="totalCarbs">0</span>
+                    <span class="macro-label">碳水/g</span>
+                </div>
+            </div>
+            <div class="summary-label">📊 今日摄入</div>
+        </div>
+
+        <!-- Camera Button -->
+        <div class="camera-section">
+            <button class="camera-btn" id="cameraBtn" onclick="triggerCamera()">
+                <span class="camera-icon">📷</span>
+                <span class="camera-text">拍照分析食物</span>
+            </button>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handleImage(event)">
+            <p class="camera-hint">对准食物拍照，自动识别营养数据</p>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-overlay" id="loadingOverlay" style="display:none">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">AI 正在分析食物...</p>
+        </div>
+
+        <!-- Result Card -->
+        <div class="result-card" id="resultCard" style="display:none">
+            <div class="result-header">
+                <h3 class="result-food" id="resultFood">-</h3>
+                <button class="result-close" onclick="closeResult()">✕</button>
+            </div>
+            <div class="result-macros">
+                <div class="r-macro r-cal">
+                    <span class="r-value" id="rCal">0</span>
+                    <span class="r-label">千卡</span>
+                </div>
+                <div class="r-macro">
+                    <span class="r-value" id="rProtein">0</span>
+                    <span class="r-label">蛋白质 g</span>
+                </div>
+                <div class="r-macro">
+                    <span class="r-value" id="rFat">0</span>
+                    <span class="r-label">脂肪 g</span>
+                </div>
+                <div class="r-macro">
+                    <span class="r-value" id="rCarbs">0</span>
+                    <span class="r-label">碳水 g</span>
+                </div>
+            </div>
+            <button class="btn-add" onclick="addToLog()">
+                ✅ 添加到今日记录
+            </button>
+        </div>
+
+        <!-- Error State -->
+        <div class="error-msg" id="errorMsg" style="display:none">
+            <span class="error-icon">⚠️</span>
+            <span class="error-text" id="errorText"></span>
+            <button class="error-close" onclick="closeError()">✕</button>
+        </div>
+
+        <!-- Today's Log -->
+        <div class="log-section">
+            <div class="log-header">
+                <h2>📋 今日记录</h2>
+                <span class="log-count" id="logCount">0项</span>
+            </div>
+            <div class="log-list" id="logList">
+                <div class="log-empty" id="logEmpty">
+                    <span class="empty-icon">🍽️</span>
+                    <p>还没记录呢</p>
+                    <p class="empty-hint">拍照开始记录你的第一餐吧</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Register Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+    </script>
+</body>
+</html>
