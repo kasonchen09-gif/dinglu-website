@@ -23,7 +23,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
 }
 
 // Middleware
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '20mb' }));
 app.use(express.static(__dirname));
 
 // Session tokens (simple in-memory storage)
@@ -52,6 +52,30 @@ const upload = multer({
         }
     }
 });
+
+// ==================== Mimo Vision API (食物分析) ====================
+const MIMO_API_KEY = process.env.MIMO_API_KEY || 'sk-ch9nur2xquyaxggrbd3akpzd4w6b0m3kc1laj8cd3e5j00gd';
+const MIMO_BASE = 'https://api.xiaomimimo.com/anthropic';
+const MIMO_MODEL = 'mimo-v2.5';
+
+const NUTRITION_PROMPT = `你是一个专业的营养师AI。请仔细查看这张食物图片，识别图中所有食物，估算其重量和营养成分。
+
+请严格按照以下JSON格式返回（只返回JSON，不要任何其他文字）：
+{
+  "foodName": "食物名称（中文）",
+  "weight": 重量克数,
+  "calories": 卡路里千卡,
+  "protein": 蛋白质克数,
+  "fat": 脂肪克数,
+  "carbs": 碳水克数,
+  "ingredients": "主要成分简述"
+}
+
+注意事项：
+1. 中式餐点请用中文准确命名
+2. 重量按正常成人一份估算
+3. 数值参考中国食物成分表
+4. 多种食物请合并计算`;
 
 // ==================== API Routes ====================
 
@@ -173,6 +197,51 @@ app.post('/api/delete-image', checkAuth, function (req, res) {
         res.json({ success: true, message: '文件已删除' });
     } else {
         res.json({ success: true, message: '文件不存在（已跳过）' });
+    }
+});
+
+// 食物热量分析 (无需登录)
+app.post('/api/analyze', async function (req, res) {
+    try {
+        const { image } = req.body;
+        if (!image) return res.status(400).json({ error: '请提供食物图片' });
+
+        console.log('🔍 分析食物...');
+        const pureBase64 = image.replace(/^data:image\/\w+;base64,/, '');
+
+        const body = {
+            model: MIMO_MODEL, max_tokens: 1024,
+            messages: [{ role: 'user', content: [
+                { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: pureBase64 }},
+                { type: 'text', text: NUTRITION_PROMPT }
+            ]}]
+        };
+
+        const resp = await fetch(`${MIMO_BASE}/v1/messages`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'api-key': MIMO_API_KEY, 'anthropic-version': '2023-06-01' },
+            body: JSON.stringify(body)
+        });
+
+        if (!resp.ok) throw new Error('Mimo API error ' + resp.status);
+
+        const data = await resp.json();
+        const text = data.content?.find(c => c.type === 'text')?.text || '';
+        const m = text.match(/\{[\s\S]*\}/);
+        if (!m) throw new Error('未能解析营养数据');
+
+        const n = JSON.parse(m[0]);
+        res.json({
+            foodName: n.foodName, weight: Math.round(n.weight || 0),
+            calories: Math.round(n.calories || 0),
+            protein: Math.round((n.protein || 0) * 10) / 10,
+            fat: Math.round((n.fat || 0) * 10) / 10,
+            carbs: Math.round((n.carbs || 0) * 10) / 10,
+            ingredients: n.ingredients || ''
+        });
+    } catch (err) {
+        console.error('分析失败:', err.message);
+        res.status(500).json({ error: err.message || '分析失败' });
     }
 });
 
