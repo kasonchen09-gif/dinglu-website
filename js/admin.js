@@ -131,7 +131,7 @@
             '</div>' +
             '<div class="card"><h3>网站 Logo</h3>' +
             '<div class="img-upload">' +
-            '<img src="' + (s.logo || 'images/鼎麓科技.png') + '" id="preview_logo" onerror="this.style.display=\'none\'">' +
+            '<img src="' + (s.logo || 'images/鼎麓科技.png') + '" alt="Logo" id="preview_logo" onerror="this.style.display=\'none\'">' +
             '<input type="file" id="file_logo" accept="image/*" onchange="uploadLogo()">' +
             '<button class="btn-sm" onclick="uploadLogo()">更换Logo</button>' +
             '<span style="font-size:12px;color:#999">推荐高度 50-60px 的长条型PNG图片</span>' +

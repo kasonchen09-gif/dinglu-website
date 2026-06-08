@@ -1,5 +1,5 @@
 /**
- * 鼎麓科技官网 - 后台服务
+ * 福州信霖管理咨询有限公司官网 - 后台服务
  * Express server: static file serving + admin API
  * 启动方式: node server.js
  * 访问地址: http://localhost:3000
@@ -196,7 +196,7 @@ function readData() {
 app.listen(PORT, function () {
     console.log('');
     console.log('  ╔══════════════════════════════════════╗');
-    console.log('  ║      鼎麓科技 - 网站管理系统       ║');
+    console.log('  ║  福州信霖管理咨询有限公司 - 网站管理系统  ║');
     console.log('  ╚══════════════════════════════════════╝');
     console.log('');
     console.log('  前台页面: http://localhost:' + PORT);

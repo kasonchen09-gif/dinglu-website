@@ -1,5 +1,5 @@
 /**
- * 鼎麓科技 - 主脚本
+ * 福州信霖管理咨询有限公司 - 主脚本
  * Main JavaScript for Dinglu Technology Website
  */
 
@@ -263,12 +263,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ==================== Console Welcome ====================
     console.log(
-        '%c 鼎麓科技 %c DINGLU TECHNOLOGY ',
+        '%c 福州信霖管理咨询有限公司 %c XINLIN CONSULTING ',
         'background:#1a3a5c;color:#c49b4f;padding:8px 16px;font-size:16px;font-weight:bold;border-radius:4px 0 0 4px;',
         'background:#c49b4f;color:#fff;padding:8px 16px;font-size:12px;border-radius:0 4px 4px 0;'
     );
-    console.log('%c📞 咨询热线：0756-6195175 / 13267992922', 'color:#1a3a5c;font-size:14px;');
-    console.log('%c📍 地址：广东省珠海市香洲区凤凰北路2099号5楼', 'color:#666;font-size:12px;');
+    console.log('%c📞 咨询热线：17859568876', 'color:#1a3a5c;font-size:14px;');
+    console.log('%c📍 地址：福建省福州市鼓楼区五凤街道铜盘路北侧保利天悦花园（地块二)B3#楼1层01商铺', 'color:#666;font-size:12px;');
 });
 
 // ==================== Loader ====================
@@ -523,7 +523,7 @@ function renderSiteData(d) {
         }
         if (d.footer.beian) {
             var beianSpan = document.querySelector('.icp span:last-child');
-            if (beianSpan && d.footer.beian !== '粤公网安备 XXXXXXXXXXXX号') {
+            if (beianSpan && d.footer.beian !== '闽公网安备 XXXXXXXXXXXX号') {
                 beianSpan.textContent = d.footer.beian;
             }
         }
